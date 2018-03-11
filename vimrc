@@ -1,7 +1,6 @@
 if &term == "xterm"
     set term=xtermc
 endif
-
 "set ai
 set noai        " always set autoindenting on, turned off by Eugene
 set background=dark	" enable bold font in vi
@@ -24,14 +23,28 @@ set textwidth=0
 set tw=79
 set viminfo='20,\"50
 "set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
-
+inoremap jj <ESC>
+inoremap ( ()<ESC>i
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap { {<CR>}<ESC>O
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap [ []<ESC>i
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap " ""<ESC>i
+inoremap ' ''<ESC>i
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else  
+        return a:char  
+    endif  
+endfunction 
 if &t_Co > 1
     syntax on
 endif
 
 highlight Normal guibg=Black guifg=White
 "syntax on
-
 "if has("vms")
 "  set nobackup      " do not keep a backup file, use versions instead
 "else
